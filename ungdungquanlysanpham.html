@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Ứng dụng quản lý sản phẩm</title>
+</head>
+<body>
+    <h3>Thêm sản phẩm mới</h3>
+    <input type="text" name="product" id="inputProduct">
+    <span><button value="add" onclick="addProduct()">Add</button></span>
+    <h3>Hiển thị toàn bộ sản phẩm</h3>
+    <div id="display"></div>
+
+    <script>
+        let listProduct = ["Táo","Xoài","Cam","Bưởi","Lê","Dưa hấu"];
+        display(listProduct);
+        function deleteProduct(productIndex) {
+            let ischeck = confirm("Bạn có chắc chắn muốn xoá sản phẩm này ?");
+            if (ischeck){
+                listProduct.splice(productIndex,1);
+                display(listProduct);
+            }
+        }
+        function editProduct(productIndex) {
+            changeProduct = prompt("Nhập tên mới cho sản phẩm '" + listProduct[productIndex] + "'");
+            if (changeProduct !== null && changeProduct !== ""){
+                listProduct[productIndex] = changeProduct;
+                display(listProduct);
+            }else {
+                alert("Tên chưa được sửa");
+
+            }
+
+        }
+        function addProduct() {
+            let newproduct = document.getElementById("inputProduct").value;
+            if (newproduct !== ""){
+                listProduct.push(newproduct);
+                display(listProduct);
+                alert("Sản phẩm đã được thêm");
+            }else {
+                alert("Hãy nhập lại sản phẩm");
+            }
+        }
+        function display(listProduct) {
+            let tableProduct = "<table cellpadding='10px' >" +
+                "<tr>" +
+                "<th>Thứ tự</th>" +
+                "<th>Sản phẩm</th>" +
+                "<th>Sửa</th>" +
+                "<th>Xoá</th>" +
+                "</tr>";
+            for (let i = 0; i < listProduct.length; i++){
+                tableProduct += "<tr>"
+                for (let j = 0; j <= 3; j++){
+                    if (j === 0){
+                        tableProduct += "<td style='width: 50px; text-align: center''>" + (i+1) + ".</td>";
+                    }else if (j === 1){
+                        tableProduct += "<td style='width: 150px; text-align: center' '>" + listProduct[i] + "</td>";
+                    }else if(j === 2){
+                        tableProduct += "<td style='width: 100px; text-align: center'>" +
+                            "<button type='button' onclick='editProduct(" + i + ")'>Edit</button>" + "</td>";
+                    }else if (j === 3){
+                        tableProduct += "<td style='width: 100px; text-align: center''>" +
+                            "<button type='button' onclick='deleteProduct(" + i + ")'>Delete</button>" + "</td>";
+                    }
+                }
+                tableProduct += "</tr>"
+            }
+            return document.getElementById("display").innerHTML = tableProduct;
+        }
+
+
+        
+    </script>
+</body>
+</html>
