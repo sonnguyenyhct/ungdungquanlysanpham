@@ -47,13 +47,20 @@
         }
         function addProduct() {
             let newproduct = document.getElementById("inputProduct").value;
-            if (newproduct !== ""){
+            let checkExist = false;
+            for (count = 0; count < listProduct.length; count++){
+                if (listProduct[count] === newproduct){
+                    alert("Sản phẩm này đã tồn tại");
+                    checkExist = true;
+                }
+            }
+            if (newproduct !== "" && checkExist === false){
                 listProduct.push(newproduct);
                 if (checkDisplay){
                     display(listProduct);
                 }
                 alert("Sản phẩm đã được thêm");
-            }else {
+            }else{
                 alert("Hãy nhập lại sản phẩm");
             }
         }
@@ -82,6 +89,7 @@
                 }
                 tableProduct += "</tr>"
             }
+            tableProduct += "<br><span style='margin-left: 10px'>Tổng số lượng sản phẩm là : </span>" + listProduct.length + "<br>";
             return document.getElementById("display").innerHTML = tableProduct;
         }
 
