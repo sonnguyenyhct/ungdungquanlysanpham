@@ -9,11 +9,24 @@
     <input type="text" name="product" id="inputProduct">
     <span><button value="add" onclick="addProduct()">Add</button></span>
     <h3>Hiển thị toàn bộ sản phẩm</h3>
+    <span><button value="display" onclick="displayProduct()"><span id="displayList">Display</span></button></span>
     <div id="display"></div>
 
     <script>
         let listProduct = ["Táo","Xoài","Cam","Bưởi","Lê","Dưa hấu"];
-        display(listProduct);
+        let checkDisplay = false;
+        function displayProduct() {
+            if (checkDisplay === false){
+                display(listProduct);
+                checkDisplay = true;
+                document.getElementById("displayList").innerHTML = "Hidden" ;
+            }else {
+                document.getElementById("displayList").innerHTML = "Display" ;
+                document.getElementById("display").innerHTML = "" ;
+                checkDisplay = false;
+            }
+
+        }
         function deleteProduct(productIndex) {
             let ischeck = confirm("Bạn có chắc chắn muốn xoá sản phẩm này ?");
             if (ischeck){
@@ -22,7 +35,7 @@
             }
         }
         function editProduct(productIndex) {
-            changeProduct = prompt("Nhập tên mới cho sản phẩm '" + listProduct[productIndex] + "'");
+            changeProduct = prompt("Nhập tên mới cho sản phẩm '" + listProduct[productIndex] + "'",listProduct[productIndex]);
             if (changeProduct !== null && changeProduct !== ""){
                 listProduct[productIndex] = changeProduct;
                 display(listProduct);
@@ -36,7 +49,9 @@
             let newproduct = document.getElementById("inputProduct").value;
             if (newproduct !== ""){
                 listProduct.push(newproduct);
-                display(listProduct);
+                if (checkDisplay){
+                    display(listProduct);
+                }
                 alert("Sản phẩm đã được thêm");
             }else {
                 alert("Hãy nhập lại sản phẩm");
@@ -70,8 +85,6 @@
             return document.getElementById("display").innerHTML = tableProduct;
         }
 
-
-        
     </script>
 </body>
 </html>
